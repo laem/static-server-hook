@@ -18,7 +18,7 @@ fi
 echo 'Npm install'
 npm install
 
-echo 'Compile'
+echo 'Run npm compile'
 npm run compile
 
 echo 'Parfait !'
