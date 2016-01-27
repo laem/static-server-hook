@@ -23,7 +23,7 @@ app.post('/hooks/github/', githubMiddleware, function(req, res) {
 });
 
 function runScript(){
-  var child = spawn('sh', [ './deployru.sh', 'https://github.com/sgmap/cout-embauche.git', 'cout-embauche', 'gh-pages' ]);
+  var child = spawn('sh', [ './deployru.sh', 'HTTPS_GIT_REPO', 'REPO_NAME', 'BRANCH_TO_BUILD', 'NPMRUNTASK' ]);
 
   child.stdout.on('data', function(data) {
       console.log('' + data);

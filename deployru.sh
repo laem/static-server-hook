@@ -4,6 +4,7 @@ set -x #echo on
 REPOSRC=$1
 LOCALREPO=$2
 BRANCH=$3
+NPMRUNTASK=$3
 
 LOCALREPO_VC_DIR=$LOCALREPO/.git
 
@@ -18,7 +19,7 @@ fi
 
 npm install
 
-npm run compile
+npm run $NPMRUNTASK
 
 echo 'Parfait !'
 
