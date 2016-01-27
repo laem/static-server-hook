@@ -3,6 +3,7 @@ var app     = express();
 var githubMiddleware = require('github-webhook-middleware')({
 	secret: 'inconnu'
 });
+var spawn = require('child_process').spawn;
 
 app.post('/hooks/github/', githubMiddleware, function(req, res) {
 	// Only respond to github push events
@@ -12,9 +13,12 @@ app.post('/hooks/github/', githubMiddleware, function(req, res) {
 		, repo    = payload.repository.full_name
 		, branch  = payload.ref.split('/').pop();
 
-  console.log(repo, branch)
+  // THINGS HAPPEN HERE !
+  if (branch !== 'gh-pages') return res.send('I\'m not concerned !');
 
-  res.status(200).end();
+  var deploySh = spawn('sh', [ 'deployru.sh' ]);
+
+  res.send('Work done !');
 
 });
 
