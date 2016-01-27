@@ -6,7 +6,7 @@ var githubMiddleware = require('github-webhook-middleware')({
 
 app.post('/hooks/github/', githubMiddleware, function(req, res) {
 	// Only respond to github push events
-	if (req.headers['x-github-event'] != 'push') return res.status(200).end();
+	if (req.headers['x-github-event'] != 'push') return res.send('I\'m not concerned !');
 
 	var payload = req.body
 		, repo    = payload.repository.full_name
