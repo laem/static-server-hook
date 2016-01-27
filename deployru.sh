@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x #echo on
 
 REPOSRC=$1
 LOCALREPO=$2
@@ -15,10 +16,8 @@ else
     git pull $REPOSRC $BRANCH
 fi
 
-echo 'Npm install'
 npm install
 
-echo 'Run npm compile'
 npm run compile
 
 echo 'Parfait !'
