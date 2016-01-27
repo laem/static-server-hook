@@ -1,19 +1,18 @@
 var express = require('express');
 var app     = express();
 var githubMiddleware = require('github-webhook-middleware')({
-	secret: 'inconnu'
+  secret: 'inconnu'
 });
 var spawn = require('child_process').spawn;
 
 app.post('/hooks/github/', githubMiddleware, function(req, res) {
-	// Only respond to github push events
-	if (req.headers['x-github-event'] != 'push') return res.send('I\'m not concerned !');
+  // Only respond to github push events
+  if (req.headers['x-github-event'] != 'push') return res.send('I\'m not concerned !');
 
-	var payload = req.body
-		, repo    = payload.repository.full_name
-		, branch  = payload.ref.split('/').pop();
+  var payload = req.body
+    , repo    = payload.repository.full_name
+    , branch  = payload.ref.split('/').pop();
 
-  // THINGS HAPPEN HERE !
   if (branch !== 'gh-pages') return res.send('I\'m not concerned !');
 
   runScript()
@@ -23,15 +22,16 @@ app.post('/hooks/github/', githubMiddleware, function(req, res) {
 });
 
 function runScript(){
-  var child = spawn('sh', [ './deployru.sh', 'HTTPS_GIT_REPO', 'REPO_NAME', 'BRANCH_TO_BUILD', 'NPMRUNTASK' ]);
+
+  // Exec bash script
+  var child = spawn('sh', [ './pull-and-build.sh', 'HTTPS_GIT_REPO', 'REPO_NAME', 'BRANCH_TO_BUILD', 'NPMRUNTASK' ]);
 
   child.stdout.on('data', function(data) {
       console.log('' + data);
-      //Here is where the output goes
+
   });
   child.stderr.on('data', function(data) {
       console.log('error: ' + data);
-      //Here is where the error output goes
   });
 
 }
