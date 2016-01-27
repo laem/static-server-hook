@@ -26,7 +26,7 @@ function runScript(){
   var child = spawn('sh', [ './deployru.sh', 'https://github.com/sgmap/cout-embauche.git', 'cout-embauche', 'gh-pages' ]);
 
   child.stdout.on('data', function(data) {
-      console.log(data);
+      console.log('' + data);
       //Here is where the output goes
   });
   child.stderr.on('data', function(data) {
