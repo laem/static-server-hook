@@ -13,7 +13,7 @@ app.post('/hooks/github/', githubMiddleware, function(req, res) {
     , repo    = payload.repository.full_name
     , branch  = payload.ref.split('/').pop();
 
-  if (branch !== 'gh-pages') return res.send('I\'m not concerned !');
+  if (branch !== 'BRANCH_TO_BUILD') return res.send('I\'m not concerned !');
 
   runScript()
 
