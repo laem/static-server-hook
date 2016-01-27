@@ -16,11 +16,25 @@ app.post('/hooks/github/', githubMiddleware, function(req, res) {
   // THINGS HAPPEN HERE !
   if (branch !== 'gh-pages') return res.send('I\'m not concerned !');
 
-  var deploySh = spawn('sh', [ 'deployru.sh' ]);
+  runScript()
 
   res.send('Work done !');
 
 });
+
+function runScript(){
+  var child = spawn('sh', [ './deployru.sh', 'https://github.com/sgmap/cout-embauche.git', 'cout-embauche', 'gh-pages' ]);
+
+  child.stdout.on('data', function(data) {
+      console.log(data);
+      //Here is where the output goes
+  });
+  child.stderr.on('data', function(data) {
+      console.log('error: ' + data);
+      //Here is where the error output goes
+  });
+
+}
 
 app.listen(7777, function () {
   console.log('Oui ?');
