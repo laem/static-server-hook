@@ -5,7 +5,7 @@ var githubMiddleware = require('github-webhook-middleware')({
 });
 var spawn = require('child_process').spawn;
 
-app.post('/hooks/github/', githubMiddleware, function(req, res) {
+app.post('/RETRIEVE/MY/STATIC/FILE/', githubMiddleware, function(req, res) {
   // Only respond to github push events
   if (req.headers['x-github-event'] != 'push') return res.send('I\'m not concerned !');
 
@@ -20,6 +20,11 @@ app.post('/hooks/github/', githubMiddleware, function(req, res) {
   res.send('Work done !');
 
 });
+
+app.get('/RETRIEVE/MY/STATIC/FILE/', function(req, res){
+  res.send('Nothing to get')
+});
+
 
 function runScript(){
 
