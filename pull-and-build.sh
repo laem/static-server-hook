@@ -1,5 +1,4 @@
 #!/bin/bash
-set -x #echo on
 
 REPOSRC=$1
 LOCALREPO=$2
@@ -16,6 +15,9 @@ else
     cd $LOCALREPO
     git pull $REPOSRC $BRANCH
 fi
+
+. ~/.nvm/nvm.sh > /dev/null
+nvm use 5
 
 npm install
 
