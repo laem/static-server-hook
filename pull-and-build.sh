@@ -16,12 +16,15 @@ else
     git pull $REPOSRC $BRANCH
 fi
 
-. ~/.nvm/nvm.sh > /dev/null
-nvm use 5
+# No need to build, dist files are already commited
 
-npm install
+# . ~/.nvm/nvm.sh > /dev/null
+# nvm use 5
 
-npm run $NPMRUNTASK
+# npm install
+
+# npm run $NPMRUNTASK
+
 
 echo 'Parfait !'
 
