@@ -11,8 +11,10 @@ if [ ! -d $LOCALREPO_VC_DIR ]
 then
     git clone $REPOSRC $LOCALREPO
     cd $LOCALREPO
+    git checkout $BRANCH
 else
     cd $LOCALREPO
+    git checkout $BRANCH
     git pull $REPOSRC $BRANCH
 fi
 
@@ -22,6 +24,7 @@ fi
 nvm use 6.9.1
 
 npm install
+npm install -g webpack
 
 npm run $NPMRUNTASK
 

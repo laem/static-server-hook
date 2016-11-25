@@ -1,11 +1,13 @@
 let express = require('express'),
   app     = express(),
-  githubMiddleware = require('github-webhook-middleware')(
+  githubMiddleware = require('github-webhook-middleware')({
   secret: 'inconnu'
 }),
   spawn = require('child_process').spawn
 
-let [_,_, httpsGitRepo, dirName, branch, npmTask] = process.argv
+let [n,s, httpsGitRepo, rawDirNames, rawBranches, npmTask] = process.argv,
+  dirNames = rawDirNames.split(','),
+  branches = rawBranches.split(',')
 
 app.post('/static-server-hook/', githubMiddleware, function(req, res) {
   // Only respond to github push events
@@ -13,11 +15,12 @@ app.post('/static-server-hook/', githubMiddleware, function(req, res) {
 
   let payload = req.body,
     repo    = payload.repository.full_name,
-    branch  = payload.ref.split('/').pop()
+    branch  = payload.ref.split('/').pop(),
+    index = branches.indexOf(branch)
 
-  if (branch !== branch) return res.send('I\'m not concerned !');
+  if (index < 0) return res.send('I\'m not concerned !');
 
-  runScript()
+  runScript(index)
 
   res.send('Work done !');
 
@@ -28,10 +31,10 @@ app.get('/static-server-hook/', function(req, res){
 });
 
 
-function runScript(){
+function runScript(index){
 
   // Exec bash script
-  let child = spawn('sh', [ './pull-and-build.sh', httpsGitRepo, dirName, branch, npmTask ]);
+  let child = spawn('sh', [ './pull-and-build.sh', httpsGitRepo, dirNames[index], branches[index], npmTask ]);
 
   child.stdout.on('data', function(data) {
       console.log('' + data);
