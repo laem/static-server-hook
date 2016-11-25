@@ -1,5 +1,4 @@
 #!/bin/bash
-set -x #echo on
 
 REPOSRC=$1
 LOCALREPO=$2
@@ -17,9 +16,15 @@ else
     git pull $REPOSRC $BRANCH
 fi
 
-npm install
+# No need to build, dist files are already commited
 
-npm run $NPMRUNTASK
+# . ~/.nvm/nvm.sh > /dev/null
+# nvm use 5
+
+# npm install
+
+# npm run $NPMRUNTASK
+
 
 echo 'Parfait !'
 
