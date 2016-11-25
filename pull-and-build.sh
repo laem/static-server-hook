@@ -18,12 +18,12 @@ fi
 
 # No need to build, dist files are already commited
 
-# . ~/.nvm/nvm.sh > /dev/null
-# nvm use 5
+. ~/.nvm/nvm.sh > /dev/null
+nvm use 6.9.1
 
-# npm install
+npm install
 
-# npm run $NPMRUNTASK
+npm run $NPMRUNTASK
 
 
 echo 'Parfait !'
