@@ -24,7 +24,6 @@ fi
 nvm use 6.9.1
 
 npm install
-npm install -g webpack
 
 npm run $NPMRUNTASK
 

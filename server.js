@@ -22,7 +22,7 @@ app.post('/static-server-hook/', githubMiddleware, function(req, res) {
 
   runScript(index)
 
-  res.send('Work done !');
+  res.send('Compiling...');
 
 });
 
