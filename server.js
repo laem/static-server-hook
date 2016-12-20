@@ -3,7 +3,12 @@ let express = require('express'),
   githubMiddleware = require('github-webhook-middleware')({
   secret: 'inconnu'
 }),
-  spawn = require('child_process').spawn
+  spawn = require('child_process').spawn,
+  cors = require('cors'),
+  bodyParser = require('body-parser'),
+  request = require('request')
+
+app.use(bodyParser.json())
 
 let [n,s, httpsGitRepo, rawDirNames, rawBranches, npmTask] = process.argv,
   dirNames = rawDirNames.split(','),
@@ -30,7 +35,6 @@ app.get('/static-server-hook/', function(req, res){
   res.send('Nothing to get')
 });
 
-
 function runScript(index){
 
   // Exec bash script
@@ -45,6 +49,32 @@ function runScript(index){
   });
 
 }
+
+
+// CORS is need for application/json POST requests from the browser
+
+app.options('/retour/', cors())
+app.post('/retour/', cors(), function(req, res) {
+
+  let options = {
+    url: 'https://api.airtable.com/v0/appihuPtw4TUIR0Y3/retours',
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer keyUq4AzhJSweQaGB',
+      'Content-type': 'application/json'
+    },
+    form: req.body
+  }
+
+  request(options, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+        res.send('C\'est bon')
+    }
+  })
+
+})
+
+
 
 app.listen(7777, function () {
   console.log('Oui ?');

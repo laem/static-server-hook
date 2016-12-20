@@ -21,6 +21,8 @@
   "homepage": "https://github.com/laem/static-server-hook#readme",
   "dependencies": {
     "express": "^4.13.4",
-    "github-webhook-middleware": "0.0.2"
+    "github-webhook-middleware": "0.0.2",
+    "cors": "^2.8.1",
+    "body-parser": "^1.15.2"
   }
 }
