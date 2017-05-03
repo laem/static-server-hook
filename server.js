@@ -10,7 +10,7 @@ let express = require('express'),
 
 app.use(bodyParser.json())
 
-let [n,s, httpsGitRepo, rawDirNames, rawBranches, npmTask] = process.argv,
+let [n,s, httpsGitRepo, rawDirNames, rawBranches, npmTask, port] = process.argv,
   dirNames = rawDirNames.split(','),
   branches = rawBranches.split(',')
 
@@ -76,6 +76,6 @@ app.post('/retour/', cors(), function(req, res) {
 
 
 
-app.listen(7777, function () {
+app.listen(+port, function () {
   console.log('Oui ?');
 });
